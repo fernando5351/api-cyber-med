@@ -18,7 +18,7 @@ app.use(cors());
 app.use(urlencoded({ extended: true }));
 app.use(multer({storage}).single('file'))
 app.use(json());
-//app.use(cookieParser())
+app.use(cookieParser())
 
 //routes
 app.use(require('./routes/productos'));
