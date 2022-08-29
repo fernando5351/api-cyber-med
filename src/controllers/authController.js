@@ -6,6 +6,12 @@ const { promisify } = require('util');
 async function register( req, res ) {
     try {
         const { nombres, apellidos, email, contrasenia } = req.body;
+
+        console.log(nombres);
+        console.log(apellidos);
+        console.log(email);
+        console.log(contrasenia);
+
         const passHash = await bcryptjs.hash(contrasenia, 8);
         console.log(passHash)
         const sql = `INSERT INTO clientes(nombres, apellidos, email, contraseña) VALUES ("${nombres}", "${apellidos}", "${email}", "${passHash}");`;
