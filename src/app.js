@@ -5,6 +5,7 @@ const { urlencoded, json } = require("express");
 const path = require("path");
 const cors = require("cors");
 const storage = require('../config/multer')
+const cookieParser = require('cookie-parser')
 
 // initialization
 const app = express();
@@ -17,6 +18,7 @@ app.use(cors());
 app.use(urlencoded({ extended: true }));
 app.use(multer({storage}).single('file'))
 app.use(json());
+app.use(cookieParser())
 
 //routes
 app.use(require('./routes/productos'));
@@ -24,6 +26,8 @@ app.use(require('./routes/empresa'));
 app.use(require('./routes/tipo_uso'));
 app.use(require('./routes/tags'));
 app.use(require('./routes/tipo_consumo'));
+app.use(require('./routes/ventas'));
+app.use(require('./routes/auth'));
 
 
 //public files
