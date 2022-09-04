@@ -70,23 +70,30 @@ async function log_out ( req , res, next ) {
         const decodificacion = await promisify(jwt.verify)(req.cookies.jwt, process.env.jwt_secret);
         connection.query(`SELECT * FROM clientes WHERE id LIKE ?`, [decodificacion.id], ( err, results ) => {
             if (!results) {
-                console.log("no estas logeado");
                 return next()   
             }
             req.email = results[0];
-            console.log("estas logeado");
             return next()
         })
       } catch (error) {
         console.log(error);
       }
     } else {
-      res.redirect('http://localhost:7000/login')
+      res.send('user log out')
     }
   }
 
+async function deleteUser ( req, res ) {
+    const { id } = req.params;
+
+    let sql = `DELETE FROM clientes WHERE id = ${id};`;
+    const query = await factory(sql);
+
+    res.json(query)
+}
 module.exports = {
     register,
     login,
-    log_out
+    log_out,
+     deleteUser
 }
