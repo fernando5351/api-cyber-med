@@ -64,6 +64,23 @@ async function login (req, res) {
     }
 }
 
+async function putUser ( req, res ) {
+    const { id, nombres, apellidos, email, contrasenia } = req.params;
+
+    const passHash = await bcryptjs.hash(contrasenia, 8);
+
+    let sql = `UPDATE clientes SET nombres="${nombres}", apellidos="${apellidos}", email="${email}", contraseña="${passHash}" WHERE id=${id};`
+
+    const query = await factory(sql);
+
+    const val = query[0].affectedRows
+    console.log(val)
+    
+    if (query.status === 200) {
+        res.json(query)
+    }
+}
+
 async function log_out ( req , res, next ) {
     if (req.cookies.jwt) {
       try {
@@ -95,5 +112,6 @@ module.exports = {
     register,
     login,
     log_out,
-     deleteUser
+    deleteUser,
+    putUser
 }
