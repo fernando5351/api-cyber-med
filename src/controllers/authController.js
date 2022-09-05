@@ -34,13 +34,13 @@ async function login (req, res) {
             if (results.length == 0 || ! (await bcryptjs.compare(contrasenia, results[0].contraseña))) {
                 console.log("user or password incorrect")
                 res.send("user or password incorrect")
-                // res.render("login", {
-                //     alert: true,
-                //     title: "Usuario o Password incorrecto",
-                //     icon: "question",
-                //     showConfirmButton: true,
-                //     timer: 10000,
-                //   });
+                res.render("login", {
+                    alert: true,
+                    title: "Usuario o Password incorrecto",
+                    icon: "question",
+                    showConfirmButton: true,
+                    timer: 10000,
+                  });
             } else {
                 //inicio ok
                 const id = results[0].id;
@@ -56,7 +56,7 @@ async function login (req, res) {
                 };
                 res.cookie("jwt", token, cookiesOptions);
                 console.log("hola estas logeado");
-                res.send("user loged")
+                res.redirect("http://localhost:7000/")
             }
         })
     } catch (error) {
@@ -64,7 +64,36 @@ async function login (req, res) {
     }
 }
 
+async function log_out ( req , res, next ) {
+    if (req.cookies.jwt) {
+      try {
+        const decodificacion = await promisify(jwt.verify)(req.cookies.jwt, process.env.jwt_secret);
+        connection.query(`SELECT * FROM clientes WHERE id LIKE ?`, [decodificacion.id], ( err, results ) => {
+            if (!results) {
+                return next()   
+            }
+            req.email = results[0];
+            return next()
+        })
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      res.send('user log out')
+    }
+  }
+
+async function deleteUser ( req, res ) {
+    const { id } = req.params;
+
+    let sql = `DELETE FROM clientes WHERE id = ${id};`;
+    const query = await factory(sql);
+
+    res.json(query)
+}
 module.exports = {
     register,
-    login
+    login,
+    log_out,
+     deleteUser
 }
