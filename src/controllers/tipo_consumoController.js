@@ -9,6 +9,18 @@ async function getTipo_consumo (req,res){
     console.log(object);
 }
 
+async function getTipo_consumo_id (req,res){
+    const {id} = req.params;
+    console.log(id);
+    let query = `SELECT productos.id,productos.nombre,productos.descripcion, productos.precios,tipo_consumo.id,tipo_consumo.tipo_consumo,productos.marca,productos.cantidad_medicamento FROM productos,tipo_consumo WHERE productos.id_tipo_consumo = tipo_consumo.id && id_tipo_consumo = ${id} ;`;
+    const response = await factory(query);
+    res.json({response});
+
+    const object = response;
+    res.json(object);
+    console.log(object);
+}
+
 async function posTipo_consumo (req,res){
     const { tipo_consumo, estado } = req.body;
     let query = `INSERT INTO tipo_consumo (tipo_consumo, estado) VALUES ("${tipo_consumo}", ${estado})`;
@@ -38,6 +50,7 @@ module.exports = {
     getTipo_consumo,
     posTipo_consumo,
     deleteTipo_cosumo,
-    updateTipo_consumo
+    updateTipo_consumo,
+    getTipo_consumo_id
 }
 
