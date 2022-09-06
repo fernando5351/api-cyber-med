@@ -49,7 +49,7 @@ async function login (req, res) {
                 };
                 res.cookie("jwt", token, cookiesOptions);
                 console.log("hola estas logeado");
-                res.redirect("http://localhost:7000/")
+                res.send("estas logeado")
             }
         })
     } catch (error) {
