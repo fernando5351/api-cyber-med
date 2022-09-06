@@ -154,7 +154,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/hola"
+              $ref: "#/components/schemas/status"
       responses:
         "200":
           description: operacion exitosa
@@ -190,6 +190,52 @@ paths:
                 $ref: '#/components/schemas/status'
         '400':
           description: error
+
+  /products/{id}:
+    get:
+      tags:
+        - products
+      summary: get a product
+      parameters:
+        - name: id
+          in: path
+          description: the id that needs to be a get products
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: this is a body request
+        '400':
+          description: error
+    
+    put:
+      tags:
+        - products
+      summary: update a product
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      requestBody:
+        description: campos que puede alterar
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/products'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/products'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/products'
+      responses:
+        '200':
+          description: operation successful
+        '400':
+          description: operation failed
 
 components:
   schemas:

@@ -34,13 +34,6 @@ async function login (req, res) {
             if (results.length == 0 || ! (await bcryptjs.compare(contrasenia, results[0].contraseña))) {
                 console.log("user or password incorrect")
                 res.send("user or password incorrect")
-                res.render("login", {
-                    alert: true,
-                    title: "Usuario o Password incorrecto",
-                    icon: "question",
-                    showConfirmButton: true,
-                    timer: 10000,
-                  });
             } else {
                 //inicio ok
                 const id = results[0].id;
