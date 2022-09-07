@@ -9,23 +9,22 @@ cloudinary.config({
   api_secret: process.env.cloudinary_key_secret
 });
 
-async function getProducts(req, res) {
+async function getProduct(req, res) {
   const { id } = req.params;
   console.log(id);
-  let query = `SELECT productos.id, productos.nombre, productos.precios, productos.marca, productos.cant_gramos FROM productos WHERE id LIKE ${id};`;
-  const form1 = await factory(query);
 
-  //let query = `SELECT productos.id, productos.descripcion, productos.img_url, productos.nombre, productos.precios, productos.marca, productos.cant_gramos, tipo_medicamento.tipo_uso, tipo_consumo.tipo_consumo, productos.cantidad_medicamento FROM productos, tipo_medicamento, tipo_consumo WHERE productos.id_tipo_uso LIKE tipo_medicamento.id &&  productos.id_tipo_consumo LIKE tipo_consumo.id;`;
+  let query = `SELECT productos.id, productos.descripcion, productos.img_url, productos.nombre, productos.precios, productos.marca, productos.cant_gramos, tipo_medicamento.tipo_uso, tipo_consumo.tipo_consumo, productos.cantidad_medicamento FROM productos, tipo_medicamento, tipo_consumo WHERE productos.id = ${id} && productos.id_tipo_uso LIKE tipo_medicamento.id &&  productos.id_tipo_consumo LIKE tipo_consumo.id;`;
+  const getProducts = await factory(query);
 
-  let query2 = `SELECT productos.descripcion, tipo_medicamento.tipo_uso, tipo_consumo.tipo_consumo, productos.cantidad_medicamento FROM productos, tipo_medicamento, tipo_consumo WHERE productos.id LIKE ${id} && productos.id_tipo_uso LIKE tipo_medicamento.id &&  productos.id_tipo_consumo LIKE tipo_consumo.id;`;
-  const form2 = await factory(query2);
+  res.json(getProducts);
+}
 
-  let query3 = `SELECT productos.img_url FROM productos WHERE id LIKE ${id}`;
-  const getImg = await factory(query3);
+async function getProducts(req, res) {
 
-  res.json({ img: getImg, formFirst: form1, formSecond: form2 });
-  console.log(query);
-  console.log(query2);
+  let query = `SELECT productos.id, productos.descripcion, productos.img_url, productos.nombre, productos.precios, productos.marca, productos.cant_gramos, tipo_medicamento.tipo_uso, tipo_consumo.tipo_consumo, productos.cantidad_medicamento FROM productos, tipo_medicamento, tipo_consumo WHERE productos.id_tipo_uso LIKE tipo_medicamento.id &&  productos.id_tipo_consumo LIKE tipo_consumo.id;`;
+  const getProducts = await factory(query);
+
+  res.json(getProducts);
 }
 
 async function postProduct (req, res) {
@@ -128,6 +127,7 @@ async function delProducts(req, res) {
 
 
 module.exports = {
+  getProduct,
   getProducts,
   postProduct,
   putProducts,

@@ -34,13 +34,6 @@ async function login (req, res) {
             if (results.length == 0 || ! (await bcryptjs.compare(contrasenia, results[0].contraseña))) {
                 console.log("user or password incorrect")
                 res.send("user or password incorrect")
-                res.render("login", {
-                    alert: true,
-                    title: "Usuario o Password incorrecto",
-                    icon: "question",
-                    showConfirmButton: true,
-                    timer: 10000,
-                  });
             } else {
                 //inicio ok
                 const id = results[0].id;
@@ -56,11 +49,28 @@ async function login (req, res) {
                 };
                 res.cookie("jwt", token, cookiesOptions);
                 console.log("hola estas logeado");
-                res.redirect("http://localhost:7000/")
+                res.send("estas logeado")
             }
         })
     } catch (error) {
         console.log(error)
+    }
+}
+
+async function putUser ( req, res ) {
+    const { id, nombres, apellidos, email, contrasenia } = req.params;
+
+    const passHash = await bcryptjs.hash(contrasenia, 8);
+
+    let sql = `UPDATE clientes SET nombres="${nombres}", apellidos="${apellidos}", email="${email}", contraseña="${passHash}" WHERE id=${id};`
+
+    const query = await factory(sql);
+
+    const val = query[0].affectedRows
+    console.log(val)
+    
+    if (query.status === 200) {
+        res.json(query)
     }
 }
 
@@ -95,5 +105,6 @@ module.exports = {
     register,
     login,
     log_out,
-     deleteUser
+    deleteUser,
+    putUser
 }
