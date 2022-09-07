@@ -237,6 +237,23 @@ paths:
         '400':
           description: operation failed
 
+  /filter/{id}:
+    get:
+      tags:
+        - products
+      summary: obtener un producto filtrado por tipo de uso
+      parameters:
+        - name: number
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: this is a body request
+        '400':
+          description: error
+
 components:
   schemas:
     User:
