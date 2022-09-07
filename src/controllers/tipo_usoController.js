@@ -3,9 +3,14 @@ const por = require ('../app');
 
 async function getTipo_usoid (req,res){
     const {id} = req.params;
-    let query = `SELECT * FROM tipo_medicamento WHERE id LIKE ${id}`;
+    let query = `SELECT productos.id,productos.nombre,productos.descripcion,tipo_medicamento.id,tipo_medicamento.tipo_uso,productos.marca,productos.cantidad_medicamento FROM productos,tipo_medicamento WHERE productos.id_tipo_uso = tipo_medicamento.id && id_tipo_uso = ${id}`;
     const response = await factory(query);  
-    res.json({response});
+  
+
+    const object = response;
+    res.json(object);
+    console.log(object);
+
 }
 async function getTipo_uso (req,res){
     let query = 'SELECT * FROM tipo_medicamento';
