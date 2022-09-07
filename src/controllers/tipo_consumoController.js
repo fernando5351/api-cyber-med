@@ -14,10 +14,8 @@ async function getTipo_consumo_id (req,res){
     console.log(id);
     let query = `SELECT productos.id , productos.nombre , productos.descripcion, tipo_medicamento.tipo_uso, productos.cantidad_medicamento, tipo_consumo.tipo_consumo, productos.cant_gramos, productos.marca, productos.precios, productos.img_url FROM productos , tipo_medicamento, tipo_consumo WHERE productos.id_tipo_uso = tipo_medicamento.id && productos.id_tipo_consumo = tipo_consumo.id && id_tipo_consumo = ${id}`;
     const response = await factory(query);
-    
     const object = response;
     res.json(object);
-    console.log(object);
 }
 
 async function posTipo_consumo (req,res){
