@@ -15,6 +15,10 @@ tags:
     description: crud para productos
   - name: tag
     description: este campo muestra el tipo uso
+  - name: tipo uso
+    description: crud para tipo de uso
+  - name: tipo consumo
+    description: crud par tipo de consumo
 paths:
   /register:
     post:
@@ -144,17 +148,11 @@ paths:
         "404":
           description: User not found
 
-  /tags:
-    post:
+  /view/tags-products:
+    get:
       tags:
         - tag
       summary: peticion get
-      requestBody:
-        description: hola
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/status"
       responses:
         "200":
           description: operacion exitosa
@@ -173,22 +171,22 @@ paths:
             schema:
               $ref: "#/components/schemas/products"
       responses:
-        '200':
+        "200":
           description: operacion exitosa
-        '400':
+        "400":
           description: operacion fallida
     get:
       tags:
         - products
       summary: read a products
       responses:
-        '200':
+        "200":
           description: operation successful
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/status'
-        '400':
+                $ref: "#/components/schemas/status"
+        "400":
           description: error
 
   /products/{id}:
@@ -204,11 +202,11 @@ paths:
           schema:
             type: number
       responses:
-        '200':
+        "200":
           description: this is a body request
-        '400':
+        "400":
           description: error
-    
+
     put:
       tags:
         - products
@@ -224,17 +222,17 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/products'
+              $ref: "#/components/schemas/products"
           application/xml:
             schema:
-              $ref: '#/components/schemas/products'
+              $ref: "#/components/schemas/products"
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/products'
+              $ref: "#/components/schemas/products"
       responses:
-        '200':
+        "200":
           description: operation successful
-        '400':
+        "400":
           description: operation failed
 
   /filter/{id}:
@@ -243,15 +241,173 @@ paths:
         - products
       summary: obtener un producto filtrado por tipo de uso
       parameters:
-        - name: number
+        - name: id
           in: path
           required: true
           schema:
             type: number
       responses:
-        '200':
+        "200":
           description: this is a body request
-        '400':
+        "400":
+          description: error
+
+  /tipo_uso:
+    post:
+      tags:
+        - tipo uso
+      summary: create a new tipe use
+      requestBody:
+        description: campos requeridos para crear un nuevo tipo de uso
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/tipo_uso"
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/tipo_uso"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/tipo_uso"
+      responses:
+        "200":
+          description: operacion exitosa
+        "400":
+          description: operacion fallida
+
+    get:
+      tags:
+        - tipo uso
+      summary: obtener lista de tipos de consumo
+      responses:
+        "200":
+          description: operation successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/status"
+        "400":
+          description: error
+
+  /tipo_uso/{id}:
+    get:
+      tags:
+        - tipo uso
+      summary: obtener un tipo de uso por su id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        "200":
+          description: operation successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/status"
+        "400":
+          description: error
+
+    put:
+      tags:
+        - tipo uso
+      summary: update a product
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      requestBody:
+        description: campos requeridos para actualizar un tipo de uso
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/tipo_uso"
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/tipo_uso"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/tipo_uso"
+      responses:
+        "200":
+          description: operacion exitosa
+        "400":
+          description: operacion fallida
+
+    delete:
+      tags:
+        - tipo uso
+      summary: delete a type of the use
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        "200":
+          description: operacion exitosa
+        "400":
+          description: operacion fallida
+
+  /tipo_consumo:
+    get:
+      tags:
+        - tipo consumo
+      summary: obtener la lista de tipos de consumo
+      responses:
+        "200":
+          description: operation successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/status"
+        "400":
+          description: error
+
+    post:
+      tags:
+        - tipo consumo
+      summary: create a new product
+      requestBody:
+        description: campos requeridos para crear un tipo de consumo
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/tipo_consumo"
+      responses:
+        "200":
+          description: operation successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/status"
+        "400":
+          description: error
+
+  /tipo_consumo/{id}:
+    get:
+      tags:
+        - tipo consumo
+      summary: get a type of tipo consumo
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        "200":
+          description: operation successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/status"
+        "400":
           description: error
 
 components:
@@ -362,18 +518,29 @@ components:
       xml:
         name: delete
 
-    ApiResponse:
+    tipo_uso:
       type: object
       properties:
-        code:
-          type: integer
-          format: int32
-        type:
+        tipo_uso:
           type: string
-        message:
-          type: string
+          example: oral
+        estado:
+          type: boolean
+          example: 1
       xml:
-        name: "##default"
+        name: tipo_uso
+
+    tipo_consumo:
+      type: object
+      properties:
+        tipo_consumo:
+          type: string
+          example: oral
+        estado:
+          type: boolean
+          example: 1
+      xml:
+        name: tipo_consumo
 
   requestBodies:
     UserArray:

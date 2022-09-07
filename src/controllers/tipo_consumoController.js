@@ -14,11 +14,10 @@ async function getTipo_consumo_id (req,res){
     console.log(id);
     let query = `SELECT productos.id,productos.nombre,productos.descripcion, productos.precios,tipo_consumo.id,tipo_consumo.tipo_consumo,productos.marca,productos.cantidad_medicamento FROM productos,tipo_consumo WHERE productos.id_tipo_consumo = tipo_consumo.id && id_tipo_consumo = ${id} ;`;
     const response = await factory(query);
-    res.json({response});
+    res.json(response);
 
     const object = response;
     res.json(object);
-    console.log(object);
 }
 
 async function posTipo_consumo (req,res){
