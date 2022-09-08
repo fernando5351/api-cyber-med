@@ -160,21 +160,6 @@ paths:
           description: fallo el proceso
 
   /products:
-    post:
-      tags:
-        - products
-      summary: create a new product
-      requestBody:
-        description: campos requeridos para el uso del crud de productos
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/products"
-      responses:
-        "200":
-          description: operacion exitosa
-        "400":
-          description: operacion fallida
     get:
       tags:
         - products
@@ -188,6 +173,22 @@ paths:
                 $ref: "#/components/schemas/status"
         "400":
           description: error
+
+    post:
+      tags:
+        - products
+      summary: create a new productgh3
+      requestBody:
+        description: campos requeridos para el uso del crud de productos
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/products"
+      responses:
+        "200":
+          description: operacion exitosa
+        "400":
+          description: operacion fallida
 
   /products/{id}:
     get:
@@ -410,6 +411,25 @@ paths:
         "400":
           description: error
 
+    put:
+      tags:
+        - tipo consumo
+      summary: update a product
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/tipo_consumo"
+      responses:
+        200:
+          description: successful operation
+
 components:
   schemas:
     User:
@@ -469,6 +489,9 @@ components:
         cant_gramos:
           type: string
           example: 500mg
+        file:
+          type: string
+          format: binary
       xml:
         name: products
 

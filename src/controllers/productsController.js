@@ -37,7 +37,7 @@ async function postProduct (req, res) {
   //obtener la direccion y el id de la imagen en cloudinary
   let route = (await response).url;
   let name_img = (await response).public_id;
-  let query = `INSERT INTO productos(img_url, name_img, descripcion, id_tipo_uso, id_tipo_consumo, cantidad_medicamento,nombre, precios, marca, cant_gramos) VALUES (${connection.escape(route)}, "${name_img}", "${descripcion}", ${id_tipo_uso}, ${id_tipo_consumo}, ${cantidad_medicamento},"${nombre}", "${precios}","${marca}",${cant_gramos})`;
+  let query = `INSERT INTO productos(img_url, name_img, descripcion, id_tipo_uso, id_tipo_consumo, cantidad_medicamento,nombre, precios, marca, cant_gramos) VALUES (${connection.escape(route)}, "${name_img}", "${descripcion}", ${id_tipo_uso}, ${id_tipo_consumo}, ${cantidad_medicamento},"${nombre}", "${precios}","${marca}","${cant_gramos}")`;
   const postData = await factory(query);
 
   res.json({ getData: postData });
