@@ -19,6 +19,8 @@ tags:
     description: crud para tipo de uso
   - name: tipo consumo
     description: crud par tipo de consumo
+  - name: codigo QR
+    description: obtener data para codigo qr
 paths:
   /register:
     post:
@@ -429,6 +431,23 @@ paths:
       responses:
         200:
           description: successful operation
+
+  /qr/{id}:
+    get:
+      tags:
+        - codigo QR
+      summary: obtener data para codigo QR
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: operation successful
+        '400':
+          description: missing properties
 
 components:
   schemas:
