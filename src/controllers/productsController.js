@@ -40,7 +40,7 @@ async function postProduct (req, res) {
   let query = `INSERT INTO productos(img_url, name_img, descripcion, id_tipo_uso, id_tipo_consumo, cantidad_medicamento,nombre, precios, marca, cant_gramos) VALUES (${connection.escape(route)}, "${name_img}", "${descripcion}", ${id_tipo_uso}, ${id_tipo_consumo}, ${cantidad_medicamento},"${nombre}", "${precios}","${marca}","${cant_gramos}")`;
   const postData = await factory(query);
 
-  res.json({ getData: postData });
+  res.json(postData);
 
   //obtener el nombre de la imagen para removerla del server
   const img = req.file.filename;

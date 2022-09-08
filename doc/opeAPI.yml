@@ -465,7 +465,7 @@ components:
     products:
       type: object
       properties:
-        nombres:
+        nombre:
           type: string
           example: Intestonomicina
         precios:
