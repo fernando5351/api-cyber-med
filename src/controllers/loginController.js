@@ -21,8 +21,6 @@ async function Register (req,res){
     }
 }
 
-
-
 async function Login (req,res){
     try {
         const {user_email,user_password} = req.body;

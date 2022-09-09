@@ -24,7 +24,6 @@ app.use(cookieParser())
 app.use(require('./routes/productos'));
 app.use(require('./routes/empresa'));
 app.use(require('./routes/tipo_uso'));
-app.use(require('./routes/tags'));
 app.use(require('./routes/tipo_consumo'));
 app.use(require('./routes/ventas'));
 app.use(require('./routes/auth'));
