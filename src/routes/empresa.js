@@ -5,9 +5,9 @@ const {getEmpresa, postEmpresa, deleteEmpresa, updateEmpresa} = require ('../con
 
 
 
-router.get('/view/empresa',getEmpresa);
-router.post('/create/empresa',postEmpresa);
-router.delete('/delete/empresa/:id',deleteEmpresa);
-router.put('/update/empresa/:id',updateEmpresa);
+router.get('/empresa',getEmpresa);
+router.post('/empresa',postEmpresa);
+router.delete('/empresa/:id',deleteEmpresa);
+router.put('/empresa/:id',updateEmpresa);
 
 module.exports = router;

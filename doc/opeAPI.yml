@@ -19,6 +19,10 @@ tags:
     description: crud para tipo de uso
   - name: tipo consumo
     description: crud par tipo de consumo
+  - name: hola
+    description: hola
+  - name: empresa
+    description: crud para empresas
 paths:
   /register:
     post:
@@ -396,7 +400,7 @@ paths:
       summary: get a type of tipo consumo
       parameters:
         - name: id
-          in: path
+          in: pat
           required: true
           schema:
             type: number
@@ -409,6 +413,90 @@ paths:
                 $ref: "#/components/schemas/status"
         "400":
           description: error
+
+  /hola/{id}:
+    get:
+      tags:
+        - hola
+      summary: este campo dice hola mundo
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: todo cool
+        '400':
+          description: error
+
+  /empresa:
+    get: 
+      tags:
+        - empresa
+      summary: obtener la lista de las empresas que proveen los productos
+      responses:
+        "200":
+          description: operation successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/empresa "
+        "400":
+          description: error
+    
+    post:
+      tags:
+        - empresa
+      summary: crear una nueva empresa
+      requestBody:
+        description: campos requeridos
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/empresa"
+      responses:
+        "200":
+          description: "operation succesfull"
+          content:
+            application/json:
+              schema:
+                $ref: "#"
+        "400":
+          description: error
+    
+  /empresa/{id}:
+    delete:
+      tags:
+        - "empresa"
+      summary: delete bussiness
+      parameters: 
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        "200":
+          description: operacion exitosa
+        "400":
+          description: operacion fallida
+    put:
+      tags:
+        - "empresa"
+      summary: update a bussiness
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        "200":
+          description: operacion exitosa
+        "400":
+          description: operacion fallida
 
 components:
   schemas:
@@ -542,6 +630,44 @@ components:
       xml:
         name: tipo_consumo
 
+    hola:
+      type: object
+      properties:
+        hola:
+          type: string
+          example: hola
+        mundo:
+          type: boolean
+          example: 0
+      xml:
+        name: hola
+
+    empresa:
+      type: object
+      properties:
+        nombre_empresa:
+           type: string
+           example: lab ysk
+        id_producto:
+          type: integer
+          example: 3
+        direccion:
+          type: string
+          example:  sonsonate
+        telefono:
+          type: string
+          example: +5032456-5665
+        email: 
+          type: string
+          example: ysk@gmail.com
+        lote: 
+          type: integer
+          example: 1
+        activo:
+          type: boolean
+          example: 1
+      xml: 
+        name: empresa
   requestBodies:
     UserArray:
       description: List of user object
