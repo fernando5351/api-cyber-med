@@ -19,10 +19,8 @@ tags:
     description: crud para tipo de uso
   - name: tipo consumo
     description: crud par tipo de consumo
-  - name: hola
-    description: hola
-  - name: empresa
-    description: crud para empresas
+  - name: codigo QR
+    description: obtener data para codigo qr
 paths:
   /register:
     post:
@@ -164,21 +162,6 @@ paths:
           description: fallo el proceso
 
   /products:
-    post:
-      tags:
-        - products
-      summary: create a new product
-      requestBody:
-        description: campos requeridos para el uso del crud de productos
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/products"
-      responses:
-        "200":
-          description: operacion exitosa
-        "400":
-          description: operacion fallida
     get:
       tags:
         - products
@@ -192,6 +175,22 @@ paths:
                 $ref: "#/components/schemas/status"
         "400":
           description: error
+
+    post:
+      tags:
+        - products
+      summary: create a new productgh3
+      requestBody:
+        description: campos requeridos para el uso del crud de productos
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/products"
+      responses:
+        "200":
+          description: operacion exitosa
+        "400":
+          description: operacion fallida
 
   /products/{id}:
     get:
@@ -414,11 +413,30 @@ paths:
         "400":
           description: error
 
-  /hola/{id}:
+    put:
+      tags:
+        - tipo consumo
+      summary: update a product
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/tipo_consumo"
+      responses:
+        200:
+          description: successful operation
+
+  /qr/{id}:
     get:
       tags:
-        - hola
-      summary: este campo dice hola mundo
+        - codigo QR
+      summary: obtener data para codigo QR
       parameters:
         - name: id
           in: path
@@ -427,76 +445,9 @@ paths:
             type: number
       responses:
         '200':
-          description: todo cool
-        '400':
-          description: error
-
-  /empresa:
-    get: 
-      tags:
-        - empresa
-      summary: obtener la lista de las empresas que proveen los productos
-      responses:
-        "200":
           description: operation successful
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/empresa "
-        "400":
-          description: error
-    
-    post:
-      tags:
-        - empresa
-      summary: crear una nueva empresa
-      requestBody:
-        description: campos requeridos
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/empresa"
-      responses:
-        "200":
-          description: "operation succesfull"
-          content:
-            application/json:
-              schema:
-                $ref: "#"
-        "400":
-          description: error
-    
-  /empresa/{id}:
-    delete:
-      tags:
-        - "empresa"
-      summary: delete bussiness
-      parameters: 
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: number
-      responses:
-        "200":
-          description: operacion exitosa
-        "400":
-          description: operacion fallida
-    put:
-      tags:
-        - "empresa"
-      summary: update a bussiness
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: number
-      responses:
-        "200":
-          description: operacion exitosa
-        "400":
-          description: operacion fallida
+        '400':
+          description: missing properties
 
 components:
   schemas:
@@ -533,7 +484,7 @@ components:
     products:
       type: object
       properties:
-        nombres:
+        nombre:
           type: string
           example: Intestonomicina
         precios:
@@ -557,6 +508,9 @@ components:
         cant_gramos:
           type: string
           example: 500mg
+        file:
+          type: string
+          format: binary
       xml:
         name: products
 
