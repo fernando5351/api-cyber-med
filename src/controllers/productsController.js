@@ -27,6 +27,26 @@ async function getProducts(req, res) {
   res.json(getProducts);
 }
 
+
+async function products_uso ( req, res) {
+  const { id } = req.params
+  let sql = `SELECT productos.id , productos.nombre , productos.descripcion, tipo_medicamento.tipo_uso, productos.cantidad_medicamento, tipo_consumo.tipo_consumo, productos.cant_gramos, productos.marca, productos.precios, productos.img_url FROM productos , tipo_medicamento, tipo_consumo WHERE productos.id_tipo_uso = tipo_medicamento.id && productos.id_tipo_consumo = tipo_consumo.id && id_tipo_uso = ${id}`;
+  const query = await factory(sql);
+
+  const object = query;
+  res.json(object);
+  console.log(object);
+}
+
+async function products_consumo (req,res){
+  const {id} = req.params;
+  console.log(id);
+  let query = `SELECT productos.id , productos.nombre , productos.descripcion, tipo_medicamento.tipo_uso, productos.cantidad_medicamento, tipo_consumo.tipo_consumo, productos.cant_gramos, productos.marca, productos.precios, productos.img_url FROM productos , tipo_medicamento, tipo_consumo WHERE productos.id_tipo_uso = tipo_medicamento.id && productos.id_tipo_consumo = tipo_consumo.id && id_tipo_consumo = ${id}`;
+  const response = await factory(query);
+  const object = response;
+  res.json(object);
+}
+
 async function postProduct (req, res) {
   const { descripcion, id_tipo_consumo, id_tipo_uso, cantidad_medicamento, nombre, precios, marca, cant_gramos } = req.body
 
@@ -128,6 +148,8 @@ async function delProducts(req, res) {
 
 module.exports = {
   getProduct,
+  products_uso,
+  products_consumo,
   getProducts,
   postProduct,
   putProducts,

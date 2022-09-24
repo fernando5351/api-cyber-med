@@ -9,6 +9,7 @@ async function Register (req,res){
         const {user_email,user_password}= req.body
         const passhash = await bcryptjs.hash(user_password,8)
         const sql = `INSERT INTO super_usuario(user_email,user_password) VALUE ("${user_email}", "${passhash}")`
+
         connection.query(sql,(err,rows)=>{
             if (err) {
                 console.log(`tienes un error en ${err}`)
@@ -34,17 +35,19 @@ async function Login (req,res){
                     expiresIn: process.env.jwt_time_expire
                 })
                 console.log(`token generado ${token} por el usuario ${results}[0].user`);
+                console.log(sql);
 
                 const cookieoptions = {
                     expires: new Date(Date.now()+ process.env.jwt_cookie_expire *24 *60 * 1000),
                     httpOnly: true
                 }
                 res.cookie("JWT". token, cookieoptions)
-                console.log('estas logueado amigo')
-                res.send("Usuario logueado con exito")
+                console.log('estas logueado amigo');
+                res.redirect('http://localhost:3000/home')
+                
             }
         })
-    } catch (error) {
+    } catch (error) {   
         console.log(`Tiene un error amigo`)
     }
 }
