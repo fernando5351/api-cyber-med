@@ -388,7 +388,7 @@ paths:
       summary: get a type of tipo consumo
       parameters:
         - name: id
-          in: pat
+          in: path
           required: true
           schema:
             type: number
