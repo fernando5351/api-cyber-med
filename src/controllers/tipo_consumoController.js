@@ -40,7 +40,6 @@ async function updateTipo_consumo(req,res){
 module.exports = {
     getTipo_consumo,
     posTipo_consumo,
-    findConsumo,
     deleteTipo_cosumo,
     updateTipo_consumo,
 
