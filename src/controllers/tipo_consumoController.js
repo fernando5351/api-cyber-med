@@ -2,11 +2,22 @@ const {factory,connection} = require('../factory/quey_factory');
 
 async function getTipo_consumo (req,res){
     let query = 'SELECT * FROM tipo_consumo';
+    console.log(query)
     const getTipo_consumo = await factory(query);
+    console.log(getTipo_consumo);
 
     const object = getTipo_consumo
     res.json(object);
     console.log(object);
+}
+
+async function findConsumo (  req, res ) {
+    const { id } = req.params;
+    const sql = `SELECT * FROM tipo_consumo WHERE id LIKE ${id}`;
+
+    const query = await factory(sql);
+
+    res.json(query)
 }
 
 async function getTipo_consumo_id (req,res){
@@ -46,6 +57,7 @@ async function updateTipo_consumo(req,res){
 module.exports = {
     getTipo_consumo,
     posTipo_consumo,
+    findConsumo,
     deleteTipo_cosumo,
     updateTipo_consumo,
     getTipo_consumo_id

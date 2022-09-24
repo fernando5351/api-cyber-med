@@ -48,29 +48,11 @@ async function login (req, res) {
                     httpOnly: true
                 };
                 res.cookie("jwt", token, cookiesOptions);
-                console.log("hola estas logeado");
-                res.send("estas logeado")
+                res.send("hola estas logeado");
             }
         })
     } catch (error) {
         console.log(error)
-    }
-}
-
-async function putUser ( req, res ) {
-    const { id, nombres, apellidos, email, contrasenia } = req.params;
-
-    const passHash = await bcryptjs.hash(contrasenia, 8);
-
-    let sql = `UPDATE clientes SET nombres="${nombres}", apellidos="${apellidos}", email="${email}", contraseña="${passHash}" WHERE id=${id};`
-
-    const query = await factory(sql);
-
-    const val = query[0].affectedRows
-    console.log(val)
-    
-    if (query.status === 200) {
-        res.json(query)
     }
 }
 
@@ -80,9 +62,11 @@ async function log_out ( req , res, next ) {
         const decodificacion = await promisify(jwt.verify)(req.cookies.jwt, process.env.jwt_secret);
         connection.query(`SELECT * FROM clientes WHERE id LIKE ?`, [decodificacion.id], ( err, results ) => {
             if (!results) {
+                console.log("no estas logeado");
                 return next()   
             }
             req.email = results[0];
+            console.log("estas logeado");
             return next()
         })
       } catch (error) {
@@ -94,13 +78,17 @@ async function log_out ( req , res, next ) {
   }
 
 async function deleteUser ( req, res ) {
-    const { id } = req.params;
+    const { id } = req.body;
 
-    let sql = `DELETE FROM clientes WHERE id = ${id};`;
+    let sql = `delete clientes WHERE id = ${id}`
+
     const query = await factory(sql);
-
-    res.json(query)
+    res.json(query);
 }
+
+async function putUser ( req, res ) {
+}
+
 module.exports = {
     register,
     login,
