@@ -43,6 +43,7 @@ async function Login (req,res){
                 }
                 res.cookie("JWT". token, cookieoptions)
                 console.log('estas logueado amigo');
+                
                 res.redirect('http://localhost:3000/home')
                 
             }

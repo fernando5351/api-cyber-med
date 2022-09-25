@@ -14,18 +14,27 @@ const app = express();
 app.set("port", port);
 
 var corsOptions = {
-  origin: "http://localhost:3000",
+  origin: "*",
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+  methods: 'GET, PUT, POST, DELETE',
+  Headers: "Origin, X-Requested-With, Content-Type, Accept",
 };
 //middlewares
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // update to match the domain you will make the request from
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
+app.use ( function ( req , res , next ) {
+  res.header ( 'Access-Control-Allow-Origin' , "*" ) ;
+  res.header ( 'Access-Control-Allow-Methods' , 'GET, PUT, POST, DELETE');
+  res.header ( 'Access-Control-Allow-Headers' , "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+})
+  
+                                            
+                                            
+                                             
 app.use(cors(corsOptions));
 app.use(urlencoded({ extended: true }));
 app.use(multer({ storage }).single("file"));
