@@ -25,6 +25,7 @@ async function Register (req,res){
 async function Login (req,res){
     try {
         const {user_email,user_password} = req.body;
+        console.log(req.body);
         let sql = `SELECT * FROM super_usuario WHERE user_email LIKE "%${user_email}"`;
         connection.query(sql,async(err,results)=>{
             if (results.length==0 || !(await bcryptjs.compare(user_password,results[0].user_password))) {
@@ -34,18 +35,17 @@ async function Login (req,res){
                 const token = jwt.sign({id:id},process.env.jwt_secret,{
                     expiresIn: process.env.jwt_time_expire
                 })
-                console.log(`token generado ${token} por el usuario ${results}[0].user`);
+                //console.log(`token generado ${token} por el usuario ${results[0].user_email}`);
                 console.log(sql);
 
-                const cookieoptions = {
+                const cookiesOptions = {
                     expires: new Date(Date.now()+ process.env.jwt_cookie_expire *24 *60 * 1000),
                     httpOnly: true
                 }
-                res.cookie("JWT". token, cookieoptions)
+                res.cookie("jwt", token, cookiesOptions);
                 console.log('estas logueado amigo');
-                
-                res.redirect('http://localhost:3000/home')
-                
+                //res.send("user loged")
+                res.redirect('http://localhost:3000/home');
             }
         })
     } catch (error) {   
@@ -53,7 +53,29 @@ async function Login (req,res){
     }
 }
 
+async function logOut(req, res, next) {
+    if (req.cookies.jwt) {
+      try {
+        const decodificacion = await promisify(jwt.verify)(req.cookies.jwt, process.env.jwt_secret);
+        connection.query(`SELECT * FROM super_usuario WHERE id LIKE ?`, [decodificacion.id],(err, results) => {
+            if (!results) {
+              console.log("no estas logeado");
+              return next();
+            }
+            req.email = results[0];
+            console.log("estas logeado");
+            return next();
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      res.send("user log out");
+    }
+  }
+
 module.exports = {
     Login,
-    Register
+    Register,
+    logOut
 }
