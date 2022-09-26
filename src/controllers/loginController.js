@@ -25,7 +25,8 @@ async function Register (req,res){
 async function Login (req,res){
     try {
         const {user_email,user_password} = req.body;
-        console.log(req.body);
+        const data = (req.body);
+        console.log(data);
         let sql = `SELECT * FROM super_usuario WHERE user_email LIKE "%${user_email}"`;
         connection.query(sql,async(err,results)=>{
             if (results.length==0 || !(await bcryptjs.compare(user_password,results[0].user_password))) {
