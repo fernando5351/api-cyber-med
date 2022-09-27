@@ -18,7 +18,12 @@ async function register(req, res) {
     console.log(sql);
     const query = await factory(sql);
 
-    res.json(query);
+    res.json({
+      "id": `${query.insertId}`,
+      "nombres": `${nombres}`,
+      "apellidos": `${apellidos}`,
+      "email": `${email}`,
+    });
   } catch (error) {
     console.log(error);
   }
@@ -32,8 +37,7 @@ async function login(req, res) {
     console.log(sql);
     connection.query(sql, async (err, results) => {
       if (
-        results.length == 0 ||
-        !(await bcryptjs.compare(contrasenia, results[0].contraseña))
+        results.length == 0 || !(await bcryptjs.compare(contrasenia, results[0].contraseña))
       ) {
         console.log("user or password incorrect");
         res.send("user or password incorrect");
@@ -52,7 +56,12 @@ async function login(req, res) {
           httpOnly: true,
         };
         res.cookie("jwt", token, cookiesOptions);
-        res.send("hola estas logeado");
+        res.json({
+          "id": `${results[0].id}`,
+          "nombres": `${results[0].nombres}`,
+          "apellidos": `${results[0].apellidos}`,
+          "email": `${results[0].email}`,
+        });
       }
     });
   } catch (error) {
