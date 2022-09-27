@@ -61,6 +61,7 @@ async function logOut(req, res, next) {
         connection.query(`SELECT * FROM super_usuario WHERE id LIKE ?`, [decodificacion.id],(err, results) => {
             if (!results) {
               console.log("no estas logeado");
+              res.redirect("http://localhost:3000")
               return next();
             }
             req.email = results[0];
@@ -72,6 +73,7 @@ async function logOut(req, res, next) {
       }
     } else {
       res.send("user log out");
+      res.redirect("http://localhost:3000")
     }
   }
 
