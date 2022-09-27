@@ -4,19 +4,20 @@ const multer = require('multer')
 const { urlencoded, json } = require("express");
 const path = require("path");
 const cors = require("cors");
-const storage = require('../config/multer')
-const cookieParser = require('cookie-parser')
+const storage = require('../config/multer');
+const cookieParser = require('cookie-parser');
 
 // initialization
 const app = express();
+const whitelist = ['http://localhost:3000/home']
 
 //settings
 app.set('port', port);
 
 //middlewares
-app.use(cors());
+app.use(cors({ whitelist }))
 app.use(urlencoded({ extended: true }));
-app.use(multer({storage}).single('file'))
+app.use(multer({ storage }).single('file'))
 app.use(json());
 app.use(cookieParser())
 
@@ -29,6 +30,7 @@ app.use(require('./routes/tipo_consumo'));
 app.use(require('./routes/ventas'));
 app.use(require('./routes/auth'));
 app.use(require('./routes/login'));
+app.use(require('./routes/prueba'))
 
 
 //public files

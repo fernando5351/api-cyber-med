@@ -8,4 +8,4 @@ app.listen(app.get('port'), (err) => {
     } else {
         console.log(`Server running on port: ${app.get('port')}`);
     }
-})
+});
