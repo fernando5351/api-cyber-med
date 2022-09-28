@@ -53,12 +53,13 @@ async function login(req, res) {
           httpOnly: true,
         };
         res.cookie("jwt", token, cookiesOptions);
-        res.json({
-          "id": `${results[0].id}`,
-          "nombres": `${results[0].nombres}`,
-          "apellidos": `${results[0].apellidos}`,
-          "email": `${results[0].email}`,
-        });
+        // res.json({
+        //   "id": `${results[0].id}`,
+        //   "nombres": `${results[0].nombres}`,
+        //   "apellidos": `${results[0].apellidos}`,
+        //   "email": `${results[0].email}`,
+        // });
+        res.redirect('htt://localhost:300/home')
       }
     });
   } catch (error) {
