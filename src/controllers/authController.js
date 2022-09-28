@@ -37,8 +37,7 @@ async function login(req, res) {
     console.log(sql);
     connection.query(sql, async (err, results) => {
       if (
-        results.length == 0 || !(await bcryptjs.compare(contrasenia, results[0].contraseña))
-      ) {
+        results.length == 0 || !(await bcryptjs.compare(contrasenia, results[0].contraseña))) {
         console.log("user or password incorrect");
         res.send("user or password incorrect");
       } else {
@@ -50,9 +49,7 @@ async function login(req, res) {
         console.log("token generado " + token + " para el usuario: " + email);
 
         const cookiesOptions = {
-          expires: new Date(
-            Date.now() + process.env.jwt_cookie_expire * 24 * 60 * 60 * 1000
-          ),
+          expires: new Date(Date.now() + process.env.jwt_cookie_expire * 24 * 60 * 60 * 1000),
           httpOnly: true,
         };
         res.cookie("jwt", token, cookiesOptions);
