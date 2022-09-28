@@ -59,7 +59,7 @@ async function login(req, res) {
         //   "apellidos": `${results[0].apellidos}`,
         //   "email": `${results[0].email}`,
         // });
-        res.redirect('htt://localhost:300/home')
+        res.redirect('http://localhost:300/home')
       }
     });
   } catch (error) {
