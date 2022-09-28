@@ -43,7 +43,7 @@ async function Login (req,res){
                     expires: new Date(Date.now() + process.env.jwt_cookie_expire * 24 * 60 * 1000),
                     httpOnly: true
                 }
-                res.cookies("jwt", token, cookiesOptions);
+                res.cookie("jwt", token, cookiesOptions);
                 console.log('estas logueado amigo');
                 //res.send("user loged")
                 res.redirect('http://localhost:3000/home');
