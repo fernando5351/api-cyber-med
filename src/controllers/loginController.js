@@ -49,11 +49,11 @@ async function Login (req,res){
                 const token = jwt.sign({id:id},process.env.jwt_secret,{
                     expiresIn: process.env.jwt_time_expire
                 })
-                //console.log(`token generado ${token} por el usuario ${results[0].user_email}`);
+                console.log(`token generado ${token} por el usuario ${results[0].user_email}`);
                 console.log(sql);
 
                 const cookiesOptions = {
-                    expires: new Date(Date.now()+ process.env.jwt_cookie_expire *24 *60 * 1000),
+                    expires: new Date(Date.now() + process.env.jwt_cookie_expire * 24 * 60 * 1000),
                     httpOnly: true
                 }
                 res.cookie("jwt", token, cookiesOptions);
