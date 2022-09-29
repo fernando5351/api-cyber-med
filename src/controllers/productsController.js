@@ -22,9 +22,11 @@ async function getProduct(req, res) {
 async function getProducts(req, res) {
 
   let query = `SELECT productos.id, productos.descripcion, productos.img_url, productos.nombre, productos.precios, productos.marca, productos.cant_gramos, tipo_medicamento.tipo_uso, tipo_consumo.tipo_consumo, productos.cantidad_medicamento FROM productos, tipo_medicamento, tipo_consumo WHERE productos.id_tipo_uso LIKE tipo_medicamento.id &&  productos.id_tipo_consumo LIKE tipo_consumo.id;`;
-  const getProducts = await factory(query);
+  const getProduct = await factory(query);
 
-  res.json(getProducts);
+  const object = getProduct
+  res.json(object);
+  console.log(object);
 }
 
 

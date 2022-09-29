@@ -13,14 +13,14 @@ tags:
     description: registro e inicio de sesion de usuarios
   - name: products
     description: crud para productos
-  - name: tag
-    description: este campo muestra el tipo uso
   - name: tipo uso
     description: crud para tipo de uso
   - name: tipo consumo
     description: crud par tipo de consumo
   - name: codigo QR
     description: obtener data para codigo qr
+  - name: login sistema web
+    description: inicio de sesion para el sistema web
 paths:
   /register:
     post:
@@ -149,17 +149,6 @@ paths:
           description: Invalid id supplied
         "404":
           description: User not found
-
-  /view/tags-products:
-    get:
-      tags:
-        - tag
-      summary: peticion get
-      responses:
-        "200":
-          description: operacion exitosa
-        "400":
-          description: fallo el proceso
 
   /products:
     get:
@@ -399,7 +388,7 @@ paths:
       summary: get a type of tipo consumo
       parameters:
         - name: id
-          in: pat
+          in: path
           required: true
           schema:
             type: number
@@ -437,6 +426,7 @@ paths:
       tags:
         - codigo QR
       summary: obtener data para codigo QR
+      description: para hacer uso de esto toda la data debe ser en src
       parameters:
         - name: id
           in: path
@@ -444,10 +434,54 @@ paths:
           schema:
             type: number
       responses:
-        '200':
+        "200":
           description: operation successful
-        '400':
+        "400":
           description: missing properties
+
+  /login/web:
+    post:
+      tags:
+        - login sistema web
+      summary: endpoint login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/login"
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/login"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/login"
+      responses:
+        "200":
+          description: operacion exitosa
+        "400":
+          description: fallida
+
+  /register/web:
+    post:
+      tags:
+        - login sistema web
+      summary: endpoint login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/login"
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/login"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/login"
+      responses:
+        "200":
+          description: operacion exitosa
+        "400":
+          description: fallida
 
 components:
   schemas:
@@ -584,44 +618,43 @@ components:
       xml:
         name: tipo_consumo
 
-    hola:
+    login:
       type: object
       properties:
-        hola:
+        user_email:
           type: string
-          example: hola
-        mundo:
-          type: boolean
-          example: 0
-      xml:
-        name: hola
+          example: laura.f@gmail.com
+        user_password:
+          type: string
+          example: LauJ&F
 
     empresa:
       type: object
       properties:
         nombre_empresa:
-           type: string
-           example: lab ysk
+          type: string
+          example: lab ysk
         id_producto:
           type: integer
           example: 3
         direccion:
           type: string
-          example:  sonsonate
+          example: sonsonate
         telefono:
           type: string
           example: +5032456-5665
-        email: 
+        email:
           type: string
           example: ysk@gmail.com
-        lote: 
+        lote:
           type: integer
           example: 1
         activo:
           type: boolean
           example: 1
-      xml: 
+      xml:
         name: empresa
+
   requestBodies:
     UserArray:
       description: List of user object

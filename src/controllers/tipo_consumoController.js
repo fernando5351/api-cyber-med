@@ -2,13 +2,14 @@ const {factory,connection} = require('../factory/quey_factory');
 
 async function getTipo_consumo (req,res){
     let query = 'SELECT * FROM tipo_consumo';
+    console.log(query)
     const getTipo_consumo = await factory(query);
+    console.log(getTipo_consumo);
 
     const object = getTipo_consumo
     res.json(object);
     console.log(object);
 }
-
 
 
 async function posTipo_consumo (req,res){

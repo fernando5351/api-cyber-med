@@ -1,11 +1,11 @@
 const router = require ('express').Router();
 const cors = require('cors')
 
-const { raw } = require('mysql');
-const {Login,Register} = require ('../controllers/loginController')
+const {Login,Register, logOut} = require ('../controllers/loginController')
 
-router.post('/Login/web',Login)
-router.post('/Register/web',Register)
+router.post('/login/web',Login)
+router.post('/register/web',Register)
+router.post('/register/log_out',logOut)
 
 
 

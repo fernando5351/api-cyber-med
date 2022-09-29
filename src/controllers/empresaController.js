@@ -2,11 +2,10 @@
 const {factory,connection} = require ('../factory/quey_factory');
 
 async function getEmpresa (req,res){
-    let query = 'SELECT  empresa.id , empresa.nombre_empresa, empresa.direccion, empresa.telefono, empresa.email,empresa.lote,empresa.activo, productos.nombre from empresa,productos where productos.id=empresa.id_producto';
+    let query = 'SELECT  empresa.id, empresa.nombre_empresa, empresa.direccion, empresa.email,empresa.telefono, empresa.lote,empresa.activo, productos.nombre FROM empresa,productos WHERE productos.id=empresa.id_producto;';
     const getEmpresa = await factory(query);
     console.log(query)
 
-    
     const object = getEmpresa
     res.json(object);
     console.log(object);
