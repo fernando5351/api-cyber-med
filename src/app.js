@@ -30,7 +30,7 @@ app.use(multer({ storage }).single("file"));
 app.use(json());
 app.use(cookieParser());
 
-//routes
+//route
 app.use(require("./routes/productos"));
 app.use(require("./routes/empresa"));
 app.use(require("./routes/tipo_uso"));
