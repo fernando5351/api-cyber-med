@@ -31,6 +31,7 @@ app.use(json());
 app.use(cookieParser());
 
 //route
+app.use(require("./routes/img"));
 app.use(require("./routes/productos"));
 app.use(require("./routes/empresa"));
 app.use(require("./routes/tipo_uso"));
