@@ -5,7 +5,7 @@ const por = require ('../app');
 async function getTipo_uso (req,res){
     let query = 'SELECT * FROM tipo_medicamento';
     const response = await factory(query);
-    res.json({response});
+    res.json(response);
 }
 
 async function postTipo_uso (req,res){
