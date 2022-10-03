@@ -50,15 +50,11 @@ async function Login (req,res){
                     expiresIn: process.env.jwt_time_expire
                 })
                 console.log(`token generado ${token} por el usuario ${results[0].user_email}`);
-                console.log(sql);
-
                 const cookiesOptions = {
                     expires: new Date(Date.now() + process.env.jwt_cookie_expire * 24 * 60 * 1000),
                     httpOnly: true
                 }
-                res.cookie("jwt", token, cookiesOptions);
-                console.log('estas logueado amigo');
-                //res.send("user loged")
+                res.cookie("JWT", token, cookiesOptions);
                 res.redirect('http://localhost:3000/home');
             }
         })
