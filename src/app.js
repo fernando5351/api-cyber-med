@@ -1,6 +1,7 @@
 const express = require("express");
 const port = process.env.PORT || 4000;
 const multer = require("multer");
+const bodyParser = require('body-parser');
 const { urlencoded, json } = require("express");
 const path = require("path");
 const cors = require("cors");
@@ -25,9 +26,9 @@ app.use ( function ( req , res , next ) {
   next();
 });                                 
 app.use(cors(corsOptions));
-app.use(urlencoded({ extended: true }));
+app.use(bodyParser.json({limit: "50mb"}));
+app.use(bodyParser.urlencoded({limit: "50mb", extended: true, parameterLimit:50000}));
 app.use(multer({ storage }).single("file"));
-app.use(json());
 app.use(cookieParser());
 
 //route

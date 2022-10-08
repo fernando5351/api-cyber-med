@@ -13,7 +13,7 @@ async function getProduct(req, res) {
   const { id } = req.params;
   console.log(id);
 
-  let query = `SELECT productos.id, productos.descripcion, productos.img_url, productos.nombre, productos.precios, productos.marca, productos.cant_gramos, tipo_medicamento.tipo_uso, tipo_consumo.tipo_consumo, productos.cantidad_medicamento FROM productos, tipo_medicamento, tipo_consumo WHERE productos.id = ${id} && productos.id_tipo_uso LIKE tipo_medicamento.id &&  productos.id_tipo_consumo LIKE tipo_consumo.id;`;
+  let query = `SELECT productos.id, productos.descripcion, productos.img_url, productos.nombre, productos.precios, productos.marca, productos.cant_gramos, productos.id_tipo_consumo, productos.id_tipo_uso, tipo_medicamento.tipo_uso, tipo_consumo.tipo_consumo, productos.cantidad_medicamento FROM productos, tipo_medicamento, tipo_consumo WHERE productos.id = ${id} && productos.id_tipo_uso LIKE tipo_medicamento.id &&  productos.id_tipo_consumo LIKE tipo_consumo.id;`;
   const getProducts = await factory(query);
 
   res.json(getProducts);
@@ -50,6 +50,7 @@ async function products_consumo (req,res){
 async function postProduct (req, res) {
   const { descripcion, id_tipo_consumo, id_tipo_uso, cantidad_medicamento, nombre, precios, marca, cant_gramos } = req.body
 
+  console.log(req.body);
   //subiendo imagenes a cloudinary
   const response = cloudinary.v2.uploader.upload(req.file.path)
   console.log(( await response))
