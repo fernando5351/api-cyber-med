@@ -10,6 +10,7 @@ const cookieParser = require("cookie-parser");
 
 // initialization
 const app = express();
+const whitelist = ['http://localhost:3000/home']
 
 //settings
 app.set("port", port);

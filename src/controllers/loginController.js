@@ -1,7 +1,19 @@
 const connection = require('../../config/connection')
+var express = require('express');
+const cors = require('cors')
+var router = express.Router();
 const bcryptjs = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const {promisify} = require ("util")
+const app = express();
+const whitelist= ['http://localhost:3000/home']
+app.use(cors({ whitelist }))
+
+
+/* GET home page. */
+router.get('/', function(req, res, next) {
+    res.render('index', { title: 'Express', session: req.session });
+  });
 
 
 async function Register (req,res){
@@ -28,6 +40,7 @@ async function Login (req,res){
         const data = (req.body);
         console.log(data);
         let sql = `SELECT * FROM super_usuario WHERE user_email LIKE "%${user_email}"`;
+        console.log(sql);
         connection.query(sql,async(err,results)=>{
             if (results.length==0 || !(await bcryptjs.compare(user_password,results[0].user_password))) {
                 res.send('mete bien las cosas amiguito')
