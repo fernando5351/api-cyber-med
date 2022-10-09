@@ -82,7 +82,7 @@ async function logOut(req, res, next) {
       }
     } else {
       res.send("user log out");
-      res.redirect("http://localhost:3000")
+      res.redirect("http://localhost:3000" || "https://cyber-med.vercel.app/home")
     }
   }
 
