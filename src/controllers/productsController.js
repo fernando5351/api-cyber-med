@@ -50,6 +50,7 @@ async function products_consumo (req,res){
 }
 
 async function postProduct (req, res) {
+  console.log(req.body);
   const { descripcion, id_tipo_consumo, id_tipo_uso, cantidad_medicamento, nombre, precios, marca, cant_gramos } = req.body
 
   console.log(req.body);
