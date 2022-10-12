@@ -13,7 +13,7 @@ async function getEmpresa (req,res){
 
 async function postEmpresa(req,res){
     const { body } = req;
-    let query = `INSERT INTO empresa (nombre_empresa, id_producto, direccion, telefono, email, lote, activo) VALUES (${connection.escape(body.nombre_empresa)},${connection.escape(body.id_producto)},${connection.escape(body.direccion)},${connection.escape(body.telefono)},${connection.escape(body.email)},${connection.escape(body.lote)},${connection.escape(body.activo)})`;
+    let query = `INSERT INTO empresa (nombre_empresa, id_producto, direccion, telefono, email, id_lote, activo) VALUES (${connection.escape(body.nombre_empresa)},${connection.escape(body.id_producto)},${connection.escape(body.direccion)},${connection.escape(body.telefono)},${connection.escape(body.email)},${connection.escape(body.id_lote)},${connection.escape(body.activo)})`;
     const response = await factory(query);
     console.log(query)
     res.json({response});
