@@ -2,7 +2,7 @@
 const {factory,connection} = require ('../factory/quey_factory');
 
 async function getEmpresa (req,res){
-    let query = 'SELECT  empresa.id, empresa.nombre_empresa, empresa.direccion, empresa.email,empresa.telefono, empresa.lote,empresa.activo, productos.nombre FROM empresa,productos WHERE productos.id=empresa.id_producto;';
+    let query = 'SELECT  empresa.id, empresa.nombre_empresa, empresa.direccion, empresa.email,empresa.telefono, empresa.activo, productos.nombre,lote.detalle_producto FROM empresa,productos,lote WHERE productos.id=empresa.id_producto AND empresa.id_lote=lote.id;';
     const getEmpresa = await factory(query);
     console.log(query)
 
@@ -27,9 +27,9 @@ async function deleteEmpresa(req, res){
 }
 
 async function updateEmpresa(req,res){
-    const {nombre_empresa,id_producto,direccion,telefono,email,lote,activo} = req.body;
+    const {nombre_empresa,id_producto,direccion,telefono,email,id_lote,activo} = req.body;
     const {id} = req.params;
-    let query = `UPDATE empresa SET id=${id} , nombre_empresa="${nombre_empresa}", id_producto=${id_producto} , direccion="${direccion}" , telefono="${telefono}" , email="${email}" , lote=${lote} , activo=${activo} WHERE id LIKE ${id};`;
+    let query = `UPDATE empresa SET id=${id} , nombre_empresa="${nombre_empresa}", id_producto=${id_producto} , direccion="${direccion}" , telefono="${telefono}" , email="${email}" , id_lote=${id_lote} , activo=${activo} WHERE id LIKE ${id};`;
     const response = await factory(query);
     console.log(query);
     res.json({response});
