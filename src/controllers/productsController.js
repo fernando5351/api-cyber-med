@@ -50,14 +50,11 @@ async function products_consumo (req,res){
 }
 
 async function postProduct (req, res) {
-  console.log(req.body);
   const { descripcion, id_tipo_consumo, id_tipo_uso, cantidad_medicamento, nombre, precios, marca, cant_gramos } = req.body
 
   console.log(req.body);
   //subiendo imagenes a cloudinary
   const response = cloudinary.v2.uploader.upload(req.file.path)
-  console.log(( await response))
-  console.log((await response).public_id);
   //obtener la direccion y el id de la imagen en cloudinary
   let route = (await response).url;
   let name_img = (await response).public_id;

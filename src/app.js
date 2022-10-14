@@ -41,6 +41,7 @@ app.use(require("./routes/tipo_consumo"));
 app.use(require("./routes/ventas"));
 app.use(require("./routes/auth"));
 app.use(require("./routes/login"));
+app.use(require("./routes/payments"))
 
 //public files
 app.use(express.static(path.join(__dirname, "../public")));
