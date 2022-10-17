@@ -16,11 +16,11 @@ async function payment (req, res){
         // console.log(charge.id);
         // res.send("received")
 
-        const { email, precio } = req.body
+        const { email, total } = req.body
 
         if (!email) { return res.status(400).json({ message: "porfavor ingrese un correo" }) }
         const paymentIntent = await stripe.paymentIntents.create({
-          amount: {precio},
+          amount: {total},
           currency: 'usd',
           payment_method_types: ['card'],
           metadata: {name},
