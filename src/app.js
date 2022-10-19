@@ -43,6 +43,7 @@ app.use(require("./routes/auth"));
 app.use(require("./routes/login"));
 app.use(require("./routes/payments"))
 app.use(require("./routes/lote"));
+app.use(require("./routes/orders"))
 
 //public files
 app.use(express.static(path.join(__dirname, "../public")));
