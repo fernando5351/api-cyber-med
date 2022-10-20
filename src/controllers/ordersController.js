@@ -24,7 +24,7 @@ async function getCarShop(req, res) {
     console.log(id);
     res.json(response);
   } else {
-    res.send("hola")
+    res.json({message: "no hay ningun producto en cuestion"})
   }
 }
 
