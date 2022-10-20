@@ -29,6 +29,7 @@ async function payment (req, res){
         res.json({ message: "Pago iniciado", clientSecret})
         let query = `ALTER TABLE datos_pedido SET estado=0 WHERE id_usuario=${id}`
         query = await factory(query)
+        console.log(query);
 
     } catch (err) {
         console.log(`hay un error en: ${err}`);
