@@ -15,7 +15,7 @@ async function getCarShop(req, res) {
 
   let validation = `SELECT estado FROM datos_pedido WHERE id_cliente = ${id}`;
   validation = await factory(validation);
-  console.log(validation[0].estado);
+  console.log(validation);
 
   if (validation[0].estado === 1) {
     const query = `SELECT productos.nombre, productos.precios, datos_pedido.id_producto, datos_pedido.id_cliente, clientes.nombres, datos_pedido.cantidad, datos_pedido.estado FROM clientes, datos_pedido, productos WHERE datos_pedido.id_cliente = ${id} && productos.id  = datos_pedido.id_producto && datos_pedido.id_cliente = clientes.id;`;
