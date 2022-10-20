@@ -1,4 +1,5 @@
 const stripe = require('stripe')(process.env.stripe_api_key);
+const { factory } = require("../factory/quey_factory")
 const YOUR_DOMAIN = 'http://localhost:4242';
 
 async function payment (req, res){
@@ -16,17 +17,18 @@ async function payment (req, res){
         // console.log(charge.id);
         // res.send("received")
 
-        const { email, total, user } = req.body
+        const { email, total, user, id } = req.body
 
         if (!email) { return res.status(400).json({ message: "porfavor ingrese un correo" }) }
         const paymentIntent = await stripe.paymentIntents.create({
           amount: {total},
           currency: 'usd',
           payment_method_types: ['card'],
-          metadata: {name},
         })
         const clientSecret = paymentIntent.client_secret;
         res.json({ message: "Pago iniciado", clientSecret})
+        let query = `ALTER TABLE datos_pedido SET estado=0 WHERE id_usuario=${id}`
+        query = await factory(query)
 
     } catch (err) {
         console.log(`hay un error en: ${err}`);

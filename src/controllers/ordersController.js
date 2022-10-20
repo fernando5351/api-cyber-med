@@ -2,10 +2,12 @@ const { factory } = require("../factory/quey_factory");
 
 async function carshop(req, res) {
   const { id_producto, id_cliente, cantidad } = req.body;
+  console.log(req.body);
   let query = `INSERT INTO datos_pedido(id_producto, id_cliente, cantidad) VALUES (${id_producto}, ${id_cliente}, ${cantidad})`;
   const response = await factory(query);
 
   res.json(response);
+  console.log(response);
 }
 
 async function getCarShop(req, res) {
