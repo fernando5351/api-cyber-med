@@ -19,7 +19,7 @@ async function getCarShop(req, res) {
   console.log(validation);
 
   if (sql[0].estado === 1) {
-    const query = `SELECT productos.nombre, productos.img_url, productos.precios, datos_pedido.id_producto, datos_pedido.id_cliente, clientes.nombres, datos_pedido.cantidad, datos_pedido.estado FROM clientes, datos_pedido, productos WHERE datos_pedido.id_cliente = ${id} && productos.id  = datos_pedido.id_producto && datos_pedido.id_cliente = clientes.id;`;
+    const query = `SELECT datos_pedido.id, productos.nombre, productos.img_url, productos.precios, datos_pedido.id_producto, datos_pedido.id_cliente, clientes.nombres, datos_pedido.cantidad, datos_pedido.estado FROM clientes, datos_pedido, productos WHERE datos_pedido.id_cliente = ${id} && productos.id  = datos_pedido.id_producto && datos_pedido.id_cliente = clientes.id;`;
     const response = await factory(query);
     console.log(query);
 
@@ -30,7 +30,16 @@ async function getCarShop(req, res) {
   }
 }
 
+async function delCarShop ( req, res ) {
+  const { id } = req.params
+  let query = `DELETE FROM datos_pedido WHERE id = ${id}`
+  query = await factory(query);
+
+  res.json(query)
+}
+
 module.exports = {
   carshop,
   getCarShop,
+  delCarShop,
 };
