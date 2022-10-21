@@ -45,14 +45,13 @@ async function login(req, res) {
     let sql = `SELECT * FROM clientes WHERE email LIKE "%${email}"`;
     console.log(sql);
     connection.query(sql, async (err, results) => {
-      if (results.length == 0) {
+       if (results.length === 0) {
         console.log("user incorrect");
-        res.status(404).send("No se encontro ningún usuario con el correo espedificado");
-      }
-      if (!(await bcryptjs.compare(contrasenia, results[0].contraseña))) {
+        res.json({message: "No se encontro ningún usuario con el correo espedificado"});
+      } if ( results.length >= 1 && (await bcryptjs.compare(contrasenia, results[0].contraseña) !== true)) {
         console.log("pasword incorrect");
         res.status(404).send("Contraseña incorrecta");
-      } else {
+      } if ( results.length >= 1 && (await bcryptjs.compare(contrasenia, results[0].contraseña) === true)) {
         //inicio ok
         const id = results[0].id;
         const token = jwt.sign({ id: id }, process.env.jwt_secret, {
@@ -73,7 +72,6 @@ async function login(req, res) {
           apellidos: `${results[0].apellidos}`,
           email: `${results[0].email}`,
         });
-        //res.redirect('http://localhost:3000/home')
       }
     });
   } catch (error) {
