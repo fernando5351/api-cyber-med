@@ -30,7 +30,16 @@ async function getCarShop(req, res) {
   }
 }
 
+async function delCarShop ( req, res ) {
+  const { id } = req.params
+  let query = `DELETE FROM datos_pedido WHERE id = ${id}`
+  query = await factory(query);
+
+  res.json(query)
+}
+
 module.exports = {
   carshop,
   getCarShop,
+  delCarShop,
 };
