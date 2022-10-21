@@ -50,7 +50,7 @@ async function login(req, res) {
         res.json({message: "No se encontro ningún usuario con el correo espedificado"});
       } if ( results.length >= 1 && (await bcryptjs.compare(contrasenia, results[0].contraseña) !== true)) {
         console.log("pasword incorrect");
-        res.status(404).json({ message: "Contraseña incorrecta"});
+        res.json({ message: "Contraseña incorrecta"});
       } if ( results.length >= 1 && (await bcryptjs.compare(contrasenia, results[0].contraseña) === true)) {
         //inicio ok
         const id = results[0].id;
