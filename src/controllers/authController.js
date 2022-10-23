@@ -1,5 +1,5 @@
 const { factory } = require("../factory/quey_factory");
-const connection = require("../../config/connection")
+const connection = require("../../config/connection");
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { promisify } = require("util");
@@ -8,20 +8,13 @@ async function register(req, res) {
   try {
     const { nombres, apellidos, email, contrasenia } = req.body;
 
-    console.log(nombres);
-    console.log(apellidos);
-    console.log(email);
-    console.log(contrasenia);
-
     let sql = `SELECT email FROM clientes WHERE email = "${email}"`;
-    connection.query( sql, async( err, results) => {
+    connection.query(sql, async (err, results) => {
       if (results.length == 0) {
         const passHash = await bcryptjs.hash(contrasenia, 8);
-        console.log(passHash);
         const sql = `INSERT INTO clientes(nombres, apellidos, email, contraseña) VALUES ("${nombres}", "${apellidos}", "${email}", "${passHash}");`;
-        console.log(sql);
         const query = await factory(sql);
-  
+
         res.json({
           id: `${query.insertId}`,
           nombres: `${nombres}`,
@@ -29,35 +22,36 @@ async function register(req, res) {
           email: `${email}`,
         });
       } else {
-        res.status(200).send("El usuario ya esta registrado")
+        res.status(200).send("El usuario ya esta registrado");
       }
-    })
-  } catch (error) {
-    console.log(error);
-  }
+    });
+  } catch (error) {}
 }
 
 async function login(req, res) {
   try {
     const { email, contrasenia } = req.body;
-    console.log(req.body);
 
     let sql = `SELECT * FROM clientes WHERE email LIKE "%${email}"`;
-    console.log(sql);
     connection.query(sql, async (err, results) => {
-       if (results.length === 0) {
-        console.log("user incorrect");
+      if (results.length === 0) {
         res.send("No se encontro ningún usuario con el correo espedificado");
-      } if ( results.length >= 1 && (await bcryptjs.compare(contrasenia, results[0].contraseña) !== true)) {
-        console.log("pasword incorrect");
+      }
+      if (
+        results.length >= 1 &&
+        (await bcryptjs.compare(contrasenia, results[0].contraseña)) !== true
+      ) {
         res.send("Contraseña incorrecta");
-      } if ( results.length >= 1 && (await bcryptjs.compare(contrasenia, results[0].contraseña) === true)) {
+      }
+      if (
+        results.length >= 1 &&
+        (await bcryptjs.compare(contrasenia, results[0].contraseña)) === true
+      ) {
         //inicio ok
         const id = results[0].id;
         const token = jwt.sign({ id: id }, process.env.jwt_secret, {
           expiresIn: process.env.jwt_time_expire,
         });
-        console.log("token generado " + token + " para el usuario: " + email);
 
         const cookiesOptions = {
           expires: new Date(
@@ -75,7 +69,7 @@ async function login(req, res) {
       }
     });
   } catch (error) {
-    console.log(error);
+    console.log(`there was an error in: ${error}`);
   }
 }
 
@@ -91,16 +85,14 @@ async function log_out(req, res, next) {
         [decodificacion.id],
         (err, results) => {
           if (!results) {
-            console.log("no estas logeado");
             return next();
           }
           req.email = results[0];
-          console.log("estas logeado");
           return next();
         }
       );
     } catch (error) {
-      console.log(error);
+      console.log(`there was an error in: ${error}`);
     }
   } else {
     res.send("user log out");

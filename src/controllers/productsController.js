@@ -11,7 +11,6 @@ cloudinary.config({
 
 async function getProduct(req, res) {
   const { id } = req.params;
-  console.log(id);
 
   let query = `SELECT productos.id, productos.descripcion, productos.img_url, productos.nombre, productos.precios, productos.marca, productos.cant_gramos, productos.id_tipo_consumo, productos.id_tipo_uso, tipo_medicamento.tipo_uso, tipo_consumo.tipo_consumo, productos.cantidad_medicamento FROM productos, tipo_medicamento, tipo_consumo WHERE productos.id = ${id} && productos.id_tipo_uso LIKE tipo_medicamento.id &&  productos.id_tipo_consumo LIKE tipo_consumo.id;`;
   const getProducts = await factory(query);
@@ -26,7 +25,6 @@ async function getProducts(req, res) {
 
   const object = getProduct
   res.json(object);
-  console.log(object);
 }
 
 
@@ -37,12 +35,10 @@ async function products_uso ( req, res) {
 
   const object = query;
   res.json(object);
-  console.log(object);
 }
 
 async function products_consumo (req,res){
   const {id} = req.params;
-  console.log(id);
   let query = `SELECT productos.id , productos.nombre , productos.descripcion, tipo_medicamento.tipo_uso, productos.cantidad_medicamento, tipo_consumo.tipo_consumo, productos.cant_gramos, productos.marca, productos.precios, productos.img_url FROM productos , tipo_medicamento, tipo_consumo WHERE productos.id_tipo_uso = tipo_medicamento.id && productos.id_tipo_consumo = tipo_consumo.id && id_tipo_consumo = ${id}`;
   const response = await factory(query);
   const object = response;
@@ -52,7 +48,6 @@ async function products_consumo (req,res){
 async function postProduct (req, res) {
   const { descripcion, id_tipo_consumo, id_tipo_uso, cantidad_medicamento, nombre, precios, marca, cant_gramos } = req.body
 
-  console.log(req.body);
   //subiendo imagenes a cloudinary
   const response = cloudinary.v2.uploader.upload(req.file.path)
   //obtener la direccion y el id de la imagen en cloudinary
@@ -65,7 +60,6 @@ async function postProduct (req, res) {
 
   //obtener el nombre de la imagen para removerla del server
   const img = req.file.filename;
-  console.log(` el nombre de la imagen es: ${img}`)
 
   //ruta donde se hubica la imagen
   let router = path.join(__dirname, `../../public/images/${img}`);
@@ -73,10 +67,9 @@ async function postProduct (req, res) {
   //eliminamos la imagen por el metodo file system                                                                                                                        
   try {
     await fs.unlinkSync(router);                                                                                                
-    console.log(` file removed ${router}`);                                                                     
     //file removed
   } catch (err) {
-    console.error(err);
+    console.log(`there was an error in: ${error}`);
   }
 }
 
@@ -90,13 +83,10 @@ async function putProducts ( req, res ) {
 
   const dataRes = data
 
-  console.log(dataRes[0].name_img)  
   const name_image = dataRes[0].name_img
   
   //subiendo imagenes a cloudinary
   const response = cloudinary.v2.uploader.upload(req.file.path);
-  console.log(( await response));
-  console.log((await response).public_id);
   //obtener la direccion y el id de la imagen en cloudinary
   let route = (await response).url;
   let name_img = (await response).public_id;
@@ -106,11 +96,9 @@ async function putProducts ( req, res ) {
   res.json(getdata)
 
   const del = await cloudinary.v2.uploader.destroy(name_image);
-  console.log(del);
 
   //obtener el nombre de la imagen para removerla del server
   const img = req.file.filename;
-  console.log(` el nombre de la imagen es: ${img}`)
 
   //ruta donde se hubica la imagen
   let router = path.join(__dirname, `../../public/images/${img}`);
@@ -118,7 +106,6 @@ async function putProducts ( req, res ) {
   //eliminamos la imagen por el metodo file system                                                                                                                        
   try {
     await fs.unlinkSync(router);                                                                                                
-    console.log(` file removed ${router}`);                                                                     
     //file removed
   } catch (err) {
     console.error(err);
@@ -140,10 +127,9 @@ async function delProducts(req, res) {
 
   res.json(response)
 
-  console.log(dataRes[0].name_img)  
   const name_img = dataRes[0].name_img
-  const result = await cloudinary.uploader.destroy(name_img)
-  console.log(result)
+  await cloudinary.uploader.destroy(name_img)
+
 }
 
 

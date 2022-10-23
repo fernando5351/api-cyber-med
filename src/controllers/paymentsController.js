@@ -1,4 +1,5 @@
-const stripe = require("stripe")(process.env.stripe_api_key);
+const Stripe = require('stripe');
+const stripe = Stripe(process.env.stripe_api_key);
 console.log(process.env.stripe_api_key);
 const { factory } = require("../factory/quey_factory");
 

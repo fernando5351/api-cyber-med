@@ -12,7 +12,6 @@ async function postTipo_uso (req,res){
     const { tipo_uso, estado} = req.body;
     let query = `INSERT INTO tipo_medicamento (tipo_uso, estado) VALUES ("${tipo_uso}", ${estado})`;
     const response = await factory(query);
-    console.log(query)
     res.json({response});
 }
 
@@ -21,7 +20,6 @@ async function updateTipo_uso (req,res){
     const {id} = req.params;
     let query = `UPDATE tipo_medicamento SET id=${id},tipo_uso ="${tipo_uso}" WHERE id LIKE ${id}`;
     const response = await factory(query); 
-    console.log(query); 
     res.json({response});
 } 
 
@@ -29,7 +27,6 @@ async function deleteTipo_uso (req,res){
     const {id} = req.params;
     let query = `DELETE FROM tipo_medicamento WHERE id=${id}`;
     const response = await factory(query);
-    console.log(query);
     res.json({response});
 }1
 
