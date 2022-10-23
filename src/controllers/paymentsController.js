@@ -1,4 +1,5 @@
 const stripe = require("stripe")(process.env.stripe_api_key);
+console.log(process.env.stripe_api_key);
 const { factory } = require("../factory/quey_factory");
 
 // async function payment (req, res){
@@ -57,7 +58,7 @@ async function payment(req, res) {
   }
 }
 
-async function stripe(req, res) {
+async function stripePay(req, res) {
   const sig = req.headers["stripe-signature"];
   let event;
   try {
@@ -102,5 +103,5 @@ async function stripe(req, res) {
 
 module.exports = {
   payment,
-  stripe,
+  stripePay,
 };
