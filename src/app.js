@@ -2,11 +2,13 @@ const express = require("express");
 const port = process.env.PORT || 4000;
 const multer = require("multer");
 const bodyParser = require('body-parser');
-const { urlencoded, json } = require("express");
+//const { urlencoded, json } = require("express");
 const path = require("path");
 const cors = require("cors");
 const storage = require("../config/multer");
 const cookieParser = require("cookie-parser");
+var paypal = require('paypal-rest-sdk');
+
 
 // initialization
 const app = express();
@@ -19,6 +21,13 @@ var corsOptions = {
   origin: "*",
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
+
+paypal.configure({
+  'mode': 'sandbox', //sandbox or live
+  'client_id': process.env.paypal_client_id,
+  'client_secret': process.env.paypal_client_secret
+});
+
 //middlewares
 app.use ( function ( req , res , next ) {
   res.header ( 'Access-Control-Allow-Origin' , "*" ) ;

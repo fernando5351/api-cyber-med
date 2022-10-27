@@ -3,11 +3,11 @@ var express = require("express");
 const cors = require("cors");
 var router = express.Router();
 const bcryptjs = require("bcryptjs");
-const jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken")
 const { promisify } = require("util");
 const app = express();
-const whitelist = ["http://localhost:3000/home"];
-app.use(cors({ whitelist }));
+const localhost = "http://localhost:3000/home";
+const railway = "https://cyber-med.vercel.app/home"
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -53,7 +53,7 @@ async function Login(req, res) {
           httpOnly: true,
         };
         res.cookie("JWT", token, cookiesOptions);
-        res.redirect("http://localhost:3000/home");
+        res.redirect(localhost);
       }
     });
   } catch (error) {
