@@ -53,7 +53,7 @@ async function Login(req, res) {
           httpOnly: true,
         };
         res.cookie("JWT", token, cookiesOptions);
-        res.redirect(localhost);
+        res.redirect(railway);
       }
     });
   } catch (error) {

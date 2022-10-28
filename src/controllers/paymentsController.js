@@ -1,5 +1,6 @@
 const Stripe = require("stripe");
 const stripe = Stripe(process.env.stripe_api_key);
+const {factory} = require("../factory/quey_factory")
 
 // async function payments(req, res) {
 //   const session = await stripe.checkout.sessions.create({
@@ -19,9 +20,9 @@ const stripe = Stripe(process.env.stripe_api_key);
 // }
 
 async function pay(req, res) {
-  const { total, email, id } = req.body;
-  console.log(req.body);
 
+  let total = 1.85
+  let email = "isaacfernando5351@gmail.com"
   let charge = Math.round( 100 * total )
   console.log(charge);
 
@@ -34,7 +35,9 @@ async function pay(req, res) {
     payment_method_types: ['card'],
   }).then( data => console.log(data))
 
-  res.send({ message: "ok"})
+  let query = `DELETE from datos_pedido`
+  query = await factory(query)
+  res.send({ message: "pago ok"})
 }
 
 // console.log(process.env.paypal_client_secret);
