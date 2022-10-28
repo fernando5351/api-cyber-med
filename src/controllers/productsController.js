@@ -12,7 +12,7 @@ cloudinary.config({
 async function getProduct(req, res) {
   const { id } = req.params;
 
-  let query = `SELECT productos.id, productos.descripcion, productos.img_url, productos.nombre, productos.precios, productos.marca, productos.cant_gramos, productos.id_tipo_consumo, productos.id_tipo_uso, tipo_medicamento.tipo_uso, tipo_consumo.tipo_consumo, productos.cantidad_medicamento FROM productos, tipo_medicamento, tipo_consumo WHERE productos.id = ${id} && productos.id_tipo_uso LIKE tipo_medicamento.id &&  productos.id_tipo_consumo LIKE tipo_consumo.id;`;
+  let query = `SELECT productos.id, productos.descripcion, productos.img_url, productos.nombre, productos.precios, productos.marca, productos.cant_gramos, productos.id_tipo_consumo, productos.id_tipo_uso, tipo_medicamento.tipo_uso, tipo_consumo.tipo_consumo, productos.cantidad_medicamento, lote.detalle_producto, productos.id_lote FROM productos, tipo_medicamento, tipo_consumo, lote WHERE productos.id_tipo_uso LIKE tipo_medicamento.id &&  productos.id_tipo_consumo LIKE tipo_consumo.id && productos.id_lote LIKE lote.id;`;
   const getProducts = await factory(query);
 
   res.json(getProducts);
