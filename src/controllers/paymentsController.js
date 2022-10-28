@@ -34,10 +34,7 @@ async function pay(req, res) {
     payment_method_types: ['card'],
   }).then( data => console.log(data))
 
-
-  res.send({
-    clientSecret: paymentIntent.client_secret
-  })
+  res.send({ message: "ok"})
 }
 
 // console.log(process.env.paypal_client_secret);
