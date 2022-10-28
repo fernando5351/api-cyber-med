@@ -17,8 +17,6 @@ async function getCarShop(req, res) {
   connection.query(query, async (err, results) => {
     if (results.length >= 1) {
       res.json(results);
-    } else {
-      res.json({ message: "no hay ningun producto en cuestion"})
     }
   });
 }
