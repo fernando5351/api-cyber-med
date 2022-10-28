@@ -18,7 +18,7 @@ async function getCarShop(req, res) {
     if (results.length >= 1) {
       res.json(results);
     } else {
-      res.json(results)
+      res.send("0")
     }
   });
 }
