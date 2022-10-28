@@ -15,11 +15,7 @@ async function getCarShop(req, res) {
 
   const query = `SELECT datos_pedido.id, productos.nombre, productos.img_url, productos.precios, datos_pedido.id_producto, datos_pedido.id_cliente, clientes.nombres, datos_pedido.cantidad, datos_pedido.estado FROM clientes, datos_pedido, productos WHERE datos_pedido.id_cliente = ${id} && productos.id  = datos_pedido.id_producto && datos_pedido.id_cliente = clientes.id && datos_pedido.estado = 1;`;
   connection.query(query, async (err, results) => {
-    if (results.length >= 1) {
-      res.json(results);
-    } else {
-      res.send("0")
-    }
+    res.json(results);
   });
 }
 
