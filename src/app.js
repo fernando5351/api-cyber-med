@@ -17,11 +17,6 @@ const whitelist = ['http://localhost:3000/home']
 
 //settings
 app.set("port", port);
-// app.engine(".hbs", engines.handlebars({
-//   defaultLayout: 'main'
-// }))
-// app.set("views", path.join(__dirname))
-
 var corsOptions = {
   origin: "*",
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
@@ -55,7 +50,7 @@ app.use(require("./routes/tipo_consumo"));
 app.use(require("./routes/ventas"));
 app.use(require("./routes/auth"));
 app.use(require("./routes/login"));
-//app.use(require("./routes/payments"))
+app.use(require("./routes/payments"))
 app.use(require("./routes/lote"));
 app.use(require("./routes/orders"))
 

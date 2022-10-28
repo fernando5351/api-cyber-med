@@ -1,7 +1,7 @@
 const router = require("express").Router()
-const { payments } = require("../controllers/paymentsController")
+const { pay } = require("../controllers/paymentsController")
 
-router.post("/payment", payments);
+router.post("/payment", pay);
 // router.post("/payments", payment);
 // router.post("/stripe", stripePay);
 
